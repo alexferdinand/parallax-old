@@ -3,33 +3,78 @@
     <div 
       class="relax"
       v-rellax="{
+      speed: 2,
+      vertical: false,
+      horizontal: true
+    }"
+    >
+      <scale 
+      :startDate="2010"
+      :endDate="2028"
+      :step="1"
+      :ratio="0.95"
+    />
+      
+    </div>
+    <div 
+      class="relax"
+      v-rellax="{
       speed: 3,
       vertical: false,
       horizontal: true
     }"
-    >I’m extra slow and smooth</div>
-    <div 
-      class="relax"
-      v-rellax="{
-      speed: 10,
-      vertical: false,
-      horizontal: true
-    }"
-    >I’m super fast!!</div>
+    >
+      <scale 
+      :startDate="2010"
+      :endDate="2028"
+      :step="1"
+      :ratio="1"
+    />
+    </div>
+
+    <!-- <scale 
+      :startDate="2010"
+      :endDate="2028"
+      :step="1"
+    /> -->
     
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import axios from 'axios'
+import Scale from '@/components/Scale'
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Scale
+  },
+
+  data() {
+    return {
+      scale: {}
+    }
+  },
+
+  created() {
+    this.getData()
+  },
+
   methods: {
     wheelHandler(event) {
       // console.log(event)
       event.view.scrollBy({left:event.deltaY, top:0, behavior: 'smooth'})
+    },
+
+    async getData() {
+      try {
+        const result = (await axios.get('/')).data
+        if (result) { 
+          this.scale = result
+        }
+      }
+      catch (e) { console.error(e) }
     }
   }
 }
@@ -43,11 +88,15 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
 .relax {
-  width: 3000px;
-  height: 100px;
-  border: 2px solid black;
+  display: flex;
+align-items: flex-end;
+
+  // width: 3000px;
+  height: 300px;
+  // border: 2px solid black;
 }
 </style>
