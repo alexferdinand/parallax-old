@@ -1,7 +1,50 @@
+header {
+    position: relative;
+}
+
+header h1 {
+    font-family: 'Poiret One', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 56px;
+    text-align: center;
+    color: #58204D;
+}
+
+header p {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #000000;
+}
+
+header p span {
+    margin-left: 30px;
+}
+
+header .instruction svg {
+    position: absolute;
+    top: 108px;
+
+}
+
+#barform {
+    display: none;
+}
+
+#eventform {
+    display: none;
+}
+
 .timeline {
     position: relative;
     display: flex;
 }
+
 .timeline-track {
     position: absolute;
     top: 5px;
@@ -10,12 +53,14 @@
     background-color: #dfe3e4;
     z-index: 1;
 }
+
 .year {
     position: relative;
     width: 100%;
     font-size: 12px;
     text-align: left;
 }
+
 .year:before {
     content: "";
     display: flex;
@@ -30,6 +75,7 @@
     position: relative;
     width: 100%;
 }
+
 .half-year:before {
     content: "";
     display: flex;
@@ -39,10 +85,12 @@
     height: 7px;
     background: #777;
 }
+
 .month {
     position: relative;
     width: 100%;
 }
+
 .month:before {
     content: "";
     display: flex;
@@ -52,6 +100,7 @@
     height: 7px;
     background: #dfe3e4;
 }
+
 .event {
     position: absolute;
     top: -3px;
@@ -63,6 +112,7 @@
     z-index: 2;
 
 }
+
 .event:before {
     content: "";
     display: flex;
@@ -83,4 +133,15 @@
 
 body {
     /*overflow-x: hidden;*/
+}
+
+#createBarButton {
+    width: 200px;
+    height: 20px;
+    background: #58204D;
+    display: block;
+}
+
+#sendBarButton {
+    display: none;
 }

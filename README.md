@@ -1,24 +1,39 @@
-# parallax-project
-Учебный командный проект по созданию графического инструмента
+# node-js-getting-started
 
-https://app.conceptboard.com/board/f5os-51n0-3313-eqtz-kd73 маркерная доска
+A barebones Node.js app using [Express 4](http://expressjs.com/).
 
-https://drive.google.com/drive/folders/1ao6kBMfNfIlNjeq_FhbojEPRTCNvYTU4?usp=sharing хранилище документов в Гугл Докс
+This application supports the [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
 
-https://github.com/alexferdinand/parallax-project Гитхаб репозиторий проекта
+## Running Locally
 
-==============================================================================================================
-ПРОЕКТ "ПАРАЛЛАКС"
+Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
 
-Обзор
-На сегодняшний день существуют многочисленные web-приложения, ориентированные на создание графического контента. Например, системы визуального прототипирования (Figma, Canva),  рисование онлайн (Aggie.io), публикации страниц в журнальном стиле (Readymag). Данные проекты зачастую являются или профессиональными инструментами с богатым функциональными возможностями и высоким порогом входа, и/или являются платными. 
-Мы считаем, что существует потребность в специализированном, но простом веб-инструменте для создания лаконичных и выразительных графических схем. 
-Цели
-1. Наш проект носит некоммерческий образовательный характер, мы рассматриваем его,  в первую очередь, как возможность улучшить навык разработки современных веб-приложений. 
-2. Нашей целью является освоение навыков командной разработки с применением современных организационных техник.
+```sh
+$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
+$ cd node-js-getting-started
+$ npm install
+$ npm start
+```
 
+Your app should now be running on [localhost:5000](http://localhost:5000/).
 
-==================================================================================================================
+## Deploying to Heroku
 
-СТАНДАРТЫ КОДА
+```
+$ heroku create
+$ git push heroku master
+$ heroku open
+```
+or
 
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+## Documentation
+
+For more information about using Node.js on Heroku, see these Dev Center articles:
+
+- [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
+- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
+- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
+- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
