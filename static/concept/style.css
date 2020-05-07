@@ -1,101 +1,277 @@
 html,
 body {
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  height: 100%;
-  width: 100%;
-}
-.main-container {
-  width: 100%;
-  height: 98vh;
-  display: flex;
-  flex-direction: column;
-  background-image: linear-gradient(to right top, #c9b6a7, #c4bba7, #bcc1ab, #b3c6b3, #abcabf, #abc9be, #abc8bd, #abc7bc, #b2c1b0, #b8baa9, #bcb4a5, #bcaea5);
-}
-header {
-  justify-self: center;
-  height: 40%;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	height: 100%;
+	width: 100%;
+	/* overflow: hidden; */
 }
 h1 {
-  color: #364B44;
+	color: #364B44;
 }
-.scale {
-  top: 25rem;
-  left: 25rem;
-  width: 500px;
-  margin: 0px 0 0 0px;
-  height: 3.8rem;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
-  display: flex;
-  align-items: flex-end;
+.main-container {
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 40% 60%;
+	background-image: linear-gradient(to right top, #c8b5a6, #a5cbce 50%, #bdafa6);
 }
-.scale_point {
-  position: relative;
-  width: 3.8rem;
-  height: 3.8rem;
-  background: url(scale-two.svg) repeat-x;
-  background-size: 5px 15px;
-  background-position-y: 40px;
+header {
+	text-align: center;
+	position: relative;
+	z-index: 999;
 }
-.scale_point:last-child {
-  width: 0px;
+header h1 {
+    font-family: 'Poiret One', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 56px;
+    text-align: center;
+    color: #58204D;
 }
-.scale_point hr {
-  width: 30px;
-  transform-origin: left;
-  transform: rotateZ(90deg);
-  margin: 15px 0px 0 0px;
+header p {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #000000;
 }
-.scale_point:first-child hr,
-.scale_point:last-child hr {
-  display: none;
+header p span {
+    margin-left: 30px;
 }
-.scale_point:first-child .scale_point_mark {
-  width: 100%;
-  height: 1em;
-  margin-top: -15px;
+header .instruction svg {
+    position: absolute;
+    /* top: 108px; */
 }
-.scale_point:last-child .scale_point_mark {
-  margin-top: -65px;
-  margin-left: -18px;
-}
-.scale_point:not(:first-child) .scale_point_mark {
-  width: 100%;
-  height: 1em;
-  position: absolute;
-  top: 3.9rem;
-  left: -15px;
-}
+
+/* ПАРАЛЛАКС */
 .parallax-container {
-  height: 60%;
-  width: 180%;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+	height: 100%;
+	grid-row-start: 2;
+	grid-row-end: 3;
+	grid-column-start: 1;
+	grid-column-end: 2;
+	width: 100vw;
+	overflow: hidden;
+	max-width: 1440px;
+    margin: auto;
 }
-.scroll-container {
-  position: absolute;
-  height: 60%;
-  width: 180vw;
-  z-index: 10;
-  bottom: 0px;
-  left: 0px;
+.parallax-layer {
+	position: relative;
+	text-align: center;
 }
 .parallax-layer-1 {
-  outline: 1px dotted black;
-  height: 50%;
-  width: 80%;
-  background-color: antiquewhite;
-  text-align: center;
+	height: 50%;
+	/* width: 120%;
+	background-color: #95BCBA; */
 }
 .parallax-layer-2 {
-  outline: 1px solid salmon;
-  height: 50%;
-  width: 100%;
-  margin-left: -30%;
-  background-color: cadetblue;
-  box-shadow: 0 -20px 20px rgba(0, 0, 0, 0.5);
-  text-align: center;
+	height: 50%;
+	/* width: 180%;
+	margin-left: -30%;
+	background-color: #EDAEC6;
+	box-shadow: 0 -20px 20px rgba(0, 0, 0, 0.5); */
+}
+.container {
+    position: absolute;
+    width: 150%;
+    bottom: 50px;
+    left: 20px;
+}
+
+/* ШКАЛА */
+.timeline {
+    position: relative;
+    display: flex;
+}
+.timeline-track {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    height: 2px;
+    background-color: #dfe3e4;
+    z-index: 1;
+}
+.year {
+    position: relative;
+    width: 100%;
+    font-size: 12px;
+    text-align: left;
+}
+.year:before {
+    content: "";
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: -10px;
+    width: 1px;
+    height: 15px;
+    background: #777;
+}
+.half-year {
+    position: relative;
+    width: 100%;
+}
+.half-year:before {
+    content: "";
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: -2px;
+    width: 2px;
+    height: 7px;
+    background: #777;
+}
+.month {
+    position: relative;
+    width: 100%;
+}
+.month:before {
+    content: "";
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: -2px;
+    width: 1px;
+    height: 7px;
+    background: #dfe3e4;
+}
+.event {
+    position: absolute;
+    top: -3px;
+    width: 4px;
+    height: 4px;
+    color: #2183dd;
+    font-size: 12px;
+    text-align: center;
+    z-index: 2;
+}
+.event:before {
+    content: "";
+    display: flex;
+    margin-bottom: -40px;
+    margin-left: -3px;
+    width: 0px;
+    height: 0px;
+    border: 4px solid #2183dd;
+    border-radius: 100%;
+}
+
+/* ПУЗЫРЬ */
+#bubble_1 {
+	bottom: 35%;
+	left: 20rem;
+}
+#bubble_2 {
+	bottom: 35%;
+	left: 30rem;
+}
+#bubble_3 {
+	bottom: 35%;
+	left: 55rem;
+}
+.bubble {
+	position: absolute;
+	width: 250px;
+	height: 120px;
+	padding: 5px;
+	border: 2px solid tan;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+}
+.bubble:after {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 41px 20px 0;
+	border-color: tan transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	bottom: -41px;
+	left: 105px;
+}
+.bubble_img {
+	background-color: tan;
+}
+.bubble img {
+	width: 180px;
+}
+.bubble-enlarge {
+	position: fixed;
+	top: 10vh;
+	left: 10vw;
+	width: 80vw;
+	height: 80vh;
+	z-index: 110;
+	background-image: url('forest.jpg');
+	display: none;
+}
+
+/* СКРОЛЛ */ /*
+.scroll-container {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	z-index: 100;
+	height: 2%;
+	width: 100%;
+	overflow: auto;
+	display: none;
+}
+.scroll-dummy {
+	width: 180%;
+	height: 100%;
+} */
+
+/* ФОРМЫ И КНОПКИ */
+#barform {
+    display: none;
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+    padding: 25px;
+    background: #ccc;
+    position: absolute;
+    z-index: 99;
+    left: 50%;
+    margin-left: -175px;
+}
+#barform input {
+	display: grid;
+}
+#sendBarButton {
+    display: grid;
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+    padding: 15px;
+    background: #ccc;
+}
+#eventform {
+    display: none;
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+    padding: 25px;
+    background: #ccc;
+}
+#createBarButton {
+    width: 120px;
+    height: 120px;
+    background: url(run_gif.gif);
+    display: block;
+    position: fixed;
+    right: 55px;
+    bottom: 55px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    outline: none;
+    border: none;
+	z-index: 99;
 }
