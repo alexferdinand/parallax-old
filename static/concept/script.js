@@ -1,110 +1,169 @@
-/*
-Заглушка
- */
-let bars = [{
-    startDate: 2005,
-    endDate: 2010,
-    events: [
-        {eventDate: "2005.03.01"},
-        {eventDate: "2010.01.01"}
-    ]
-}, {
-    startDate: 1980,
-    endDate: 2017,
-    events: [
-        {eventDate: "2000.03.01"},
-        {eventDate: "1980.07.14"},
-        {eventDate: "2010.01.01"},
-        {eventDate: "2014.12.19"}
-    ]
-}];
+//Заглушка
+let currentYear = new Date().getFullYear(); // текущий год
+let input = {
+  start: currentYear - 10, // текущий год минус 10 лет
+  end: currentYear + 10, // текущий год плюс 10 лет
+  events: [
+    {date: "2015.03.01"},
+    {date: "2028.05.01"},
+    {date: "2022.01.01"},
+    {date: "2011.06.01"},
+    {date: "2025.07.01"},
+    {date: "2020.02.01"},
+    {date: "2017.09.01"}
+  ]
+};
 
-bars.forEach(printBar);
-
-function printBar(bar, index) {
-    const TIMELINE_ID = "timeline";
-    const TIMELINE_TRACK_ID = "timeline-track";
-    const HALFYEARMARK_CLASS_NAME = "half-year";
-    const MONTHMARK_CLASS_NAME = "month";
-    let barDuration = bar.endDate - bar.startDate;
-    let barStep = barDuration > 20 ? 5 : 1;                                     //Для больших шкал, шаг - 5 лет
-    let timeline = document.getElementById(TIMELINE_ID + index);
-    let timelineTrack = document.getElementById(TIMELINE_TRACK_ID + index);
-
-    for (let year = bar.startDate; year <= bar.endDate; year += barStep) {
-        printYearMark(year, bar, barStep, barDuration, timeline);
-        if (year + barStep > bar.endDate) break;
-        if (barDuration > 10) {                                                 //Для маленьких шкал (< 10 лет)
-            printInterimMark(timeline, HALFYEARMARK_CLASS_NAME);                //рисуем штрихи для каждого месяца,
-        } else {                                                                //иначе рисуем штрихи для полугодий
-            for(let i = 0; i < 11; i++) {
-                printInterimMark(timeline, MONTHMARK_CLASS_NAME);
-            }
-        }
+//Автоматически определяем,какой будет шаг по умолчанию, можем прикрутить,чтобы пользователь менял его
+let barLength = input.end - input.start;
+let step = barLength > 20 ? 5 : 1;
+//создаем отметки для годов
+for (let year = input.start; year <= input.end; year += step) {
+  let d = document.createElement('div');
+  d.className = "year";
+  let label = document.createElement('div');
+  label.innerHTML = year;
+  label.style.marginLeft = "-13px";
+  d.appendChild(label);
+  if (year + step > input.end) {
+    d.style.width = "2px";
+    // на случай,если шаг 5 лет ,а год метки не кратен 5 
+    let margin = (100 / (barLength / 5)) * (0.2 * (barLength % 5));
+    d.style.marginRight = margin + "%";
+    if (margin > 0) {
+      let d3 = document.createElement('div');
+      d3.className = "year";
+      d3.style.position = "absolute";
+      d3.style.right = "0px";
+      d3.style.width = "2px";
+      let label = document.createElement('div');
+      label.innerHTML = input.end;
+      label.style.marginLeft = "-13px";
+      d3.appendChild(label);
+      document.getElementById("timeline").appendChild(d3);
     }
-    bar.events.forEach((event) => printEventMark(event.eventDate, bar, timelineTrack));
-}
-
-function printYearMark(year, bar, barStep, barDuration, timeline){
-    let yearMark = document.createElement('div');
-    yearMark.className = "year";
-    let yearLabel = document.createElement('div');
-    yearLabel.innerHTML = year;
-    yearLabel.style.marginLeft = "-13px";
-    yearMark.appendChild(yearLabel);
-    if (year + barStep > bar.endDate) {
-        yearMark.style.width = "2px";
-        /*
-        Если шаг больше одного года и у диапозона шкалы есть остаток от деления на шаг, то у последнего года делаем
-        отступ справа, пропорциональный этому остатку, а в конец шкалы добавляем метку с последним годов для этой шкалы.
-        Например: шкала - 1990-2011 (21 год), шаг - 5 лет, у метки 2010 года справа будет отступ на один год,
-        а в конец шкалы добавится метка 2011 года.
-         */
-        if(barStep > 1) {
-            let margin = (100 / (barDuration / 5)) * (0.2 * (barDuration % 5));
-            yearMark.style.marginRight = margin + "%";
-            if (margin > 0) {
-                let lastYearLabel = document.createElement('div');
-                lastYearLabel.className = "year";
-                lastYearLabel.style.position = "absolute";
-                lastYearLabel.style.right = "0px";
-                lastYearLabel.style.width = "2px";
-                let yearLabel = document.createElement('div');
-                yearLabel.innerHTML = bar.endDate;
-                yearLabel.style.marginLeft = "-13px";
-                lastYearLabel.appendChild(yearLabel);
-                timeline.appendChild(lastYearLabel);
-            }
-        }
+  }
+  // если шкала больше 10 лет, то отмечаем черточками полугодия
+  document.getElementById("timeline").appendChild(d);
+  if (year + step <= input.end) {
+    if (barLength > 10) {
+      let d2 = document.createElement('div');
+      d2.className = "half-year";
+      d2.innerHTML = "";
+      document.getElementById("timeline").appendChild(d2);
     }
-    timeline.appendChild(yearMark);
+    // если шкала меньше или 10 лет,то отмечаем черточками месяцы
+    else {
+      for (let i = 0; i < 11; i++) {
+        let d2 = document.createElement('div');
+        d2.className = "month";
+        d2.innerHTML = "";
+        document.getElementById("timeline").appendChild(d2);
+      }
+    }
+  }
 }
-
-function printInterimMark(timeline, className) {
-    let mark = document.createElement('div');
-    mark.className = className;
-    mark.innerHTML = "";
-    timeline.appendChild(mark);
+for (let i = 0; i < input.events.length; i++) {
+  let event = document.createElement('div');
+  event.className = "event";
+  event.innerHTML = input.events[i].date;
+  event.style.left = calculatePosition(new Date(input.start, 0, 1), new Date(input.end, 0, 1), new Date(input.events[i].date));
+  document.getElementById("timeline-track").appendChild(event);
 }
-
-function printEventMark(eventDate, bar, timeline) {
-    let eventMark = document.createElement('div');
-    eventMark.className = "event";
-    eventMark.innerHTML = eventDate;
-    eventMark.style.left = calculatePosition(new Date(bar.startDate, 0, 1),     //Границы шкалы - 01 января
-                                             new Date(bar.endDate, 0, 1),
-                                             new Date(eventDate));
-    timeline.appendChild(eventMark);
-}
-/*
-Вычисляется количество дней в шкале и количество дней от начала шкалы до даты события. Принимаем
-длину шкалы (в днях) за 100% и вычисляем отношение количества дней до события ко всей шкале
-(в процентах), а полученное значение применяется в качестве отпуства метки события от левого края.
- */
+// Просчитываем позицию метки 
 function calculatePosition(start, end, event) {
-    const oneDay = 24 * 60 * 60 * 1000;                                         //Перевод милисекунд в дни
-    const barDays = Math.round(Math.abs((end - start) / oneDay));
-    const eventDays = Math.round(Math.abs((event - start) / oneDay));
-    return eventDays * 100 / barDays + "%";
+  // console.log(start,end,event);
+  const oneDay = 24 * 60 * 60 * 1000;
+  const barDays = Math.round(Math.abs((end - start) / oneDay));
+  const eventDays = Math.round(Math.abs((event - start) / oneDay));
+  //console.log(barDays, eventDays);
+  return eventDays * 100 / barDays + "%";
 }
 
+
+
+
+//Автоматически определяем,какой будет шаг по умолчанию, можем прикрутить,чтобы пользователь менял его
+barLength = input.end - input.start;
+step = barLength > 20 ? 5 : 1;
+//создаем отметки для годов
+for (let year = input.start; year <= input.end; year += step) {
+  let d = document.createElement('div');
+  d.className = "year";
+  let label = document.createElement('div');
+  label.innerHTML = year;
+  label.style.marginLeft = "-13px";
+  d.appendChild(label);
+  if (year + step > input.end) {
+    d.style.width = "2px";
+    // на случай,если шаг 5 лет ,а год метки не кратен 5 
+    let margin = (100 / (barLength / 5)) * (0.2 * (barLength % 5));
+    d.style.marginRight = margin + "%";
+    if (margin > 0) {
+      let d3 = document.createElement('div');
+      d3.className = "year";
+      d3.style.position = "absolute";
+      d3.style.right = "0px";
+      d3.style.width = "2px";
+      let label = document.createElement('div');
+      label.innerHTML = input.end;
+      label.style.marginLeft = "-13px";
+      d3.appendChild(label);
+      document.getElementById("timeline1").appendChild(d3);
+    }
+  }
+  // если шкала больше 10 лет, то отмечаем черточками полугодия
+  document.getElementById("timeline1").appendChild(d);
+  if (year + step <= input.end) {
+    if (barLength > 10) {
+      let d2 = document.createElement('div');
+      d2.className = "half-year";
+      d2.innerHTML = "";
+      document.getElementById("timeline1").appendChild(d2);
+    }
+    // если шкала меньше или 10 лет,то отмечаем черточками месяцы
+    else {
+      for (let i = 0; i < 11; i++) {
+        let d2 = document.createElement('div');
+        d2.className = "month";
+        d2.innerHTML = "";
+        document.getElementById("timeline1").appendChild(d2);
+      }
+    }
+  }
+}
+for (let i = 0; i < input.events.length; i++) {
+  let event = document.createElement('div');
+  event.className = "event";
+  event.innerHTML = input.events[i].date;
+  event.style.left = calculatePosition(new Date(input.start, 0, 1), new Date(input.end, 0, 1), new Date(input.events[i].date));
+  document.getElementById("timeline-track1").appendChild(event);
+}
+
+
+let dummy = document.getElementById('scroll-container')
+
+
+function elementMove(offset) {
+  let parallaxLayer1 = document.querySelector('.parallax-layer-1')
+  let parallaxLayer2 = document.querySelector('.parallax-layer-2')
+  console.log(offset * 0.3)
+  parallaxLayer1.style.marginLeft = offset * 0.3 + 'px'
+  parallaxLayer2.style.marginLeft = offset * 0.7 + 'px'
+}
+
+dummy.addEventListener('scroll', function () {
+  let Ycoord = Math.round(document.getElementById('scroll-dummy').getBoundingClientRect().left)
+  console.log(Ycoord, 'px');
+  elementMove(Ycoord)
+});
+
+let bigImg = document.getElementById('bubble-enlarge')
+
+document.getElementById("bubble_3").addEventListener("click", function() {
+  bigImg.style.display = 'block'
+})
+
+document.getElementById("bubble-enlarge").addEventListener("click", function() {
+  bigImg.style.display = "block"  ? 'none' : "block"
+})
